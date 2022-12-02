@@ -10,7 +10,7 @@ import UIKit
 
 class TodoListViewController: UITableViewController {
 
-    let items = ["Find Mike", "Buy Eggos", "Destroy Demogorgon"]
+    var items = ["Find Mike", "Buy Eggos", "Destroy Demogorgon"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,6 +32,7 @@ extension TodoListViewController {
 }
 
 // MARK: - TableView Delegate Methods
+
 extension TodoListViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView.cellForRow(at: indexPath)?.accessoryType == .checkmark {
@@ -42,3 +43,33 @@ extension TodoListViewController {
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }
+
+// MARK: - Add New Items
+
+extension TodoListViewController {
+    @IBAction func addButtonPressed(_ sender: Any) {
+        let alertController = UIAlertController(title: "Add Item", message: nil, preferredStyle: .alert)
+
+        alertController.addTextField { textField in
+            textField.placeholder = "What do you need to do?"
+        }
+        
+        let addTodoAction = UIAlertAction(title: "Add", style: .default) { [weak alertController] _ in
+            guard let textFields = alertController?.textFields else { return }
+            if let todoText = textFields.first?.text {
+                self.addTodo(todoText)
+            }
+        }
+
+        alertController.addAction(addTodoAction)
+
+        present(alertController, animated: true)
+    }
+
+    private func addTodo(_ text: String) {
+        items.append(text)
+        tableView.reloadData()
+    }
+}
+
+
