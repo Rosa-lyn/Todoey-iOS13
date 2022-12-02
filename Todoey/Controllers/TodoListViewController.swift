@@ -10,14 +10,28 @@ import UIKit
 
 class TodoListViewController: UITableViewController {
 
-    var items = ["Find Mike", "Buy Eggos", "Destroy Demogorgon"]
+    var items = [Item]()
     let defaults = UserDefaults.standard
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        if let items = defaults.array(forKey: "TodoListArray") as? [String] {
-            self.items = items
-        }
+
+        let newItem = Item()
+        newItem.title = "Find Mike"
+        items.append(newItem)
+
+        let newItem2 = Item()
+        newItem2.title = "Buy Eggos"
+        items.append(newItem2)
+
+        let newItem3 = Item()
+        newItem3.title = "Destroy Demogorgon"
+        items.append(newItem3)
+
+
+//        if let items = defaults.array(forKey: "TodoListArray") as? [String] {
+//            self.items = items
+//        }
     }
 }
 
@@ -26,7 +40,7 @@ class TodoListViewController: UITableViewController {
 extension TodoListViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TodoItemCell", for: indexPath)
-        cell.textLabel?.text = items[indexPath.row]
+        cell.textLabel?.text = items[indexPath.row].title
         return cell
     }
 
@@ -61,7 +75,9 @@ extension TodoListViewController {
         let addTodoAction = UIAlertAction(title: "Add", style: .default) { [weak alertController] _ in
             guard let textFields = alertController?.textFields else { return }
             if let todoText = textFields.first?.text {
-                self.addTodo(todoText)
+                let newItem = Item()
+                newItem.title = todoText
+                self.addTodo(newItem)
             }
         }
 
@@ -70,8 +86,8 @@ extension TodoListViewController {
         present(alertController, animated: true)
     }
 
-    private func addTodo(_ text: String) {
-        items.append(text)
+    private func addTodo(_ item: Item) {
+        items.append(item)
         defaults.set(items, forKey: "TodoListArray")
         tableView.reloadData()
     }
