@@ -51,6 +51,7 @@ extension TodoListViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
         items[indexPath.row].done.toggle()
+//        deleteItem(at: indexPath.row)
 
         saveItems()
 
@@ -113,6 +114,13 @@ extension TodoListViewController {
         } catch {
             print("Error fetching data from context: \(error)")
         }
+    }
+
+    func deleteItem(at index: Int) {
+        // must call context.delete first to access the item array
+        context.delete(items[index])
+        items.remove(at: index)
+        saveItems()
     }
 }
 
