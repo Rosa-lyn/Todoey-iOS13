@@ -83,6 +83,15 @@ extension CategoryViewController {
 // MARK: - TV Delegate Methods
 
 extension CategoryViewController {
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let destinationVC = segue.destination as! TodoListViewController
+
+        if let indexPath = tableView.indexPathForSelectedRow {
+            destinationVC.selectedCategory = categories[indexPath.row]
+        }
+    }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         performSegue(withIdentifier: K.Categories.itemsSegue, sender: self)
     }
