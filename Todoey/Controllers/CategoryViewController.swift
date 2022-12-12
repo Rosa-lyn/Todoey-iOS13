@@ -45,9 +45,10 @@ class CategoryViewController: UITableViewController {
     private func addCategory(_ category: Category) {
         categories.append(category)
         print(categories)
+        tableView.reloadData()
     }
 
-    // MARK: - TV Datasource Methods
+
 
 
     // MARK: - Data Manipulation Methods
@@ -55,4 +56,20 @@ class CategoryViewController: UITableViewController {
 
     // MARK: - TV Delegate Methods
 
+}
+
+// MARK: - TV Datasource Methods
+
+extension CategoryViewController {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return categories.count
+    }
+
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath)
+        let category = categories[indexPath.row]
+
+        cell.textLabel?.text = category.name
+        return cell
+    }
 }
