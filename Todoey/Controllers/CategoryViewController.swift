@@ -26,30 +26,15 @@ class CategoryViewController: UITableViewController {
 extension CategoryViewController {
 
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
-        let alertController = UIAlertController(title: "Add Category", message: nil, preferredStyle: .alert)
-
-        alertController.addTextField { textField in
-            textField.placeholder = "Create a new category"
+        presentAlert(called: "Add category", placeholder: "Create a new category") { categoryText in
+            self.addCategory(called: categoryText)
         }
-
-        let addCategoryAction = UIAlertAction(title: "Add", style: .default) { [weak alertController] _ in
-            guard let textFields = alertController?.textFields else { return }
-            if let categoryText = textFields.first?.text {
-
-                let newCategory = Category(context: self.context)
-                newCategory.name = categoryText
-                self.addCategory(newCategory)
-            }
-        }
-
-        alertController.addAction(addCategoryAction)
-
-        present(alertController, animated: true)
     }
 
-    private func addCategory(_ category: Category) {
-        categories.append(category)
-        print(categories)
+    private func addCategory(called categoryName: String) {
+        let newCategory = Category(context: self.context)
+        newCategory.name = categoryName
+        categories.append(newCategory)
         saveCategories()
     }
 }
