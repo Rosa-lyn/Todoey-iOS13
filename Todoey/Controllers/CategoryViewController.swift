@@ -19,8 +19,12 @@ class CategoryViewController: UITableViewController {
         loadCategories()
 
     }
+}
 
-    // MARK: - Add New Categories
+// MARK: - Add New Categories
+
+extension CategoryViewController {
+
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
         let alertController = UIAlertController(title: "Add Category", message: nil, preferredStyle: .alert)
 
@@ -48,12 +52,11 @@ class CategoryViewController: UITableViewController {
         print(categories)
         saveCategories()
     }
+}
 
+// MARK: - Data Manipulation Methods
 
-
-
-    // MARK: - Data Manipulation Methods
-        // save and load data
+extension CategoryViewController {
 
     func saveCategories() {
         do {
@@ -74,9 +77,6 @@ class CategoryViewController: UITableViewController {
 
         tableView.reloadData()
     }
-
-    // MARK: - TV Delegate Methods
-
 }
 
 // MARK: - TV Datasource Methods
@@ -94,3 +94,5 @@ extension CategoryViewController {
         return cell
     }
 }
+
+// MARK: - TV Delegate Methods
