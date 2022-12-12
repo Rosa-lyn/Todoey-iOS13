@@ -23,10 +23,10 @@ class CategoryViewController: UITableViewController {
 
 // MARK: - Add New Categories
 
-extension CategoryViewController {
+extension CategoryViewController: Alertable {
 
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
-        presentAlert(called: "Add category", placeholder: "Create a new category") { categoryText in
+        presentAddActionAlert(called: "Add category", placeholder: "Create a new category") { categoryText in
             self.addCategory(called: categoryText)
         }
     }

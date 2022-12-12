@@ -1,5 +1,5 @@
 //
-//  UIViewController+Extension.swift
+//  Alertable.swift
 //  Todoey
 //
 //  Created by Rosalyn Land on 12/12/2022.
@@ -9,9 +9,11 @@
 import Foundation
 import UIKit
 
-extension UIViewController {
+protocol Alertable { }
 
-    func presentAlert(called title: String, placeholder: String, completion: @escaping (String) -> ()) {
+extension Alertable where Self: UIViewController {
+
+    func presentAddActionAlert(called title: String, placeholder: String, completion: @escaping (String) -> ()) {
         let alertController = UIAlertController(title: title, message: nil, preferredStyle: .alert)
 
         alertController.addTextField() { textField in
@@ -24,7 +26,7 @@ extension UIViewController {
             }
         }
         alertController.addAction(action)
-        
+
         present(alertController, animated: true)
 
     }

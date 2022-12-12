@@ -53,9 +53,10 @@ extension TodoListViewController {
 
 // MARK: - Add New Items
 
-extension TodoListViewController {
+extension TodoListViewController: Alertable {
+    
     @IBAction func addButtonPressed(_ sender: Any) {
-        presentAlert(called: "Add Item", placeholder: "What do you need to do?") { itemText in
+        presentAddActionAlert(called: "Add Item", placeholder: "What do you need to do?") { itemText in
             self.addTodo(itemText)
         }
     }
