@@ -26,7 +26,7 @@ class CategoryViewController: UITableViewController {
 extension CategoryViewController: Alertable {
 
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
-        presentAddActionAlert(called: "Add category", placeholder: "Create a new category") { categoryText in
+        presentAddActionAlert(called: K.Categories.alertTitle, placeholder: K.Categories.alertTextFieldPlaceholder) { categoryText in
             self.addCategory(called: categoryText)
         }
     }
@@ -47,7 +47,7 @@ extension CategoryViewController {
         do {
             try context.save()
         } catch {
-            print("Error saving context: \(error)")
+            print(K.Errors.savingContext + "\(error)")
         }
 
         tableView.reloadData()
@@ -57,7 +57,7 @@ extension CategoryViewController {
         do {
             categories = try context.fetch(request)
         } catch {
-            print("Error fetching categories from context: \(error)")
+            print(K.Errors.fetchingFromContext + "\(error)")
         }
 
         tableView.reloadData()
@@ -72,7 +72,7 @@ extension CategoryViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: K.Categories.cellIdentifier, for: indexPath)
         let category = categories[indexPath.row]
 
         cell.textLabel?.text = category.name
@@ -84,6 +84,6 @@ extension CategoryViewController {
 
 extension CategoryViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "goToItems", sender: self)
+        performSegue(withIdentifier: K.Categories.itemsSegue, sender: self)
     }
 }

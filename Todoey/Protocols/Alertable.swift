@@ -20,7 +20,7 @@ extension Alertable where Self: UIViewController {
             textField.placeholder = placeholder
         }
 
-        let action = UIAlertAction(title: "Add", style: .default) { [weak alertController] _ in
+        let action = UIAlertAction(title: K.addActionButton, style: .default) { [weak alertController] _ in
             if let inputText = alertController?.textFields?.first?.text {
                 completion(inputText)
             }

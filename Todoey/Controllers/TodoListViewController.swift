@@ -26,7 +26,7 @@ class TodoListViewController: UITableViewController {
 
 extension TodoListViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TodoItemCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: K.Items.cellIdentifier, for: indexPath)
 
         let item = items[indexPath.row]
         cell.textLabel?.text = item.title
@@ -56,7 +56,7 @@ extension TodoListViewController {
 extension TodoListViewController: Alertable {
     
     @IBAction func addButtonPressed(_ sender: Any) {
-        presentAddActionAlert(called: "Add Item", placeholder: "What do you need to do?") { itemText in
+        presentAddActionAlert(called: K.Items.alertTitle, placeholder: K.Items.alertTextFieldPlaceholder) { itemText in
             self.addTodo(itemText)
         }
     }
@@ -77,7 +77,7 @@ extension TodoListViewController {
         do {
             try context.save()
         } catch {
-            print("Error saving context: \(error)")
+            print(K.Errors.savingContext + "\(error)")
         }
 
         tableView.reloadData()
@@ -88,7 +88,7 @@ extension TodoListViewController {
             // array of items that are in our container
             items = try context.fetch(request)
         } catch {
-            print("Error fetching data from context: \(error)")
+            print(K.Errors.fetchingFromContext + "\(error)")
         }
 
         tableView.reloadData()
