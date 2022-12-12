@@ -55,33 +55,17 @@ extension TodoListViewController {
 
 extension TodoListViewController {
     @IBAction func addButtonPressed(_ sender: Any) {
-        let alertController = UIAlertController(title: "Add Item", message: nil, preferredStyle: .alert)
-
-        alertController.addTextField { textField in
-            textField.placeholder = "What do you need to do?"
+        presentAlert(called: "Add Item", placeholder: "What do you need to do?") { itemText in
+            self.addTodo(itemText)
         }
-        
-        let addTodoAction = UIAlertAction(title: "Add", style: .default) { [weak alertController] _ in
-            guard let textFields = alertController?.textFields else { return }
-            if let todoText = textFields.first?.text {
-
-                let newItem = Item(context: self.context)
-                newItem.title = todoText
-                newItem.done = false
-                self.addTodo(newItem)
-            }
-        }
-
-        alertController.addAction(addTodoAction)
-
-        present(alertController, animated: true)
     }
 
-    private func addTodo(_ item: Item) {
-        items.append(item)
-
+    private func addTodo(_ todoTitle: String) {
+        let newItem = Item(context: self.context)
+        newItem.title = todoTitle
+        newItem.done = false
+        items.append(newItem)
         saveItems()
-
     }
 }
 
