@@ -16,6 +16,7 @@ class CategoryViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        loadCategories()
 
     }
 
@@ -45,7 +46,7 @@ class CategoryViewController: UITableViewController {
     private func addCategory(_ category: Category) {
         categories.append(category)
         print(categories)
-        tableView.reloadData()
+        saveCategories()
     }
 
 
@@ -53,6 +54,26 @@ class CategoryViewController: UITableViewController {
 
     // MARK: - Data Manipulation Methods
         // save and load data
+
+    func saveCategories() {
+        do {
+            try context.save()
+        } catch {
+            print("Error saving context: \(error)")
+        }
+
+        tableView.reloadData()
+    }
+
+    func loadCategories(with request: NSFetchRequest<Category> = Category.fetchRequest()) {
+        do {
+            categories = try context.fetch(request)
+        } catch {
+            print("Error fetching categories from context: \(error)")
+        }
+
+        tableView.reloadData()
+    }
 
     // MARK: - TV Delegate Methods
 
