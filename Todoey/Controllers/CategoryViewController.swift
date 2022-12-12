@@ -81,3 +81,9 @@ extension CategoryViewController {
 }
 
 // MARK: - TV Delegate Methods
+
+extension CategoryViewController {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "goToItems", sender: self)
+    }
+}
